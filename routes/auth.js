@@ -2,9 +2,8 @@ const bcrypt = require("bcrypt");
 
 async function routes(fastify, options) {
   fastify.register(require("fastify-jwt"), {
-    secret: "Xo3gb5q*BmViA8Zk#^rZH!mcTfR7kB*rDLr#CCpGuLN",
-    public:
-      "N^e*87^%87oEXcX^T3CCetoqmgeZ$A9Jic75WCmrF9Hi!oV$uBGcuXYLLxMzGsvjTES#KqUR9uz#&!%M&nveHkC",
+    secret: process.env.JWT_SECERET,
+    public: process.env.PUBLIC_KEY,
   });
 
   fastify.decorate("authenticate", async (request, reply) => {

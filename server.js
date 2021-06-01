@@ -1,8 +1,28 @@
 const fastify = require("fastify")();
+const fastifyEnv = require("fastify-env");
 
-fastify.register(require("./utils/db"), {
-  useUnifiedTopology: true,
-  url: "mongodb+srv://meer:AWYwHSXaQRfdXIhM@cluster0.pmapc.mongodb.net/jwt-auth",
+const schema = {
+  type: "object",
+  required: ["PORT"],
+  properties: {
+    PORT: {
+      type: "string",
+      default: 3000,
+    },
+  },
+};
+
+const options = {
+  schema: schema,
+  data: process.env,
+  dotenv: true,
+};
+
+fastify.register(fastifyEnv, options).after(() => {
+  fastify.register(require("./utils/db"), {
+    useUnifiedTopology: true,
+    url: process.env.MONGO_URL,
+  });
 });
 
 fastify.get("/", function (request, reply) {
@@ -19,4 +39,3 @@ fastify.listen(3000, function (err, address) {
   }
   fastify.log.info(`server listening on ${address}`);
 });
-
