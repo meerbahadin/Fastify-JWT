@@ -32,10 +32,14 @@ fastify.get("/", function (request, reply) {
 fastify.register(require("./routes/auth"));
 
 //Server Creation
-fastify.listen(process.env.PORT || 3000, function (err, address) {
-  if (err) {
-    fastify.log.error(err);
-    process.exit(1);
+fastify.listen(
+  process.env.PORT || 3000,
+  process.env.HOST || "::",
+  function (err, address) {
+    if (err) {
+      fastify.log.error(err);
+      process.exit(1);
+    }
+    fastify.log.info(`server listening on ${address}`);
   }
-  fastify.log.info(`server listening on ${address}`);
-});
+);
