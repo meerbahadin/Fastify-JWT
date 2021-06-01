@@ -9,4 +9,5 @@ async function dbConnector (fastify, options) {
   fastify.decorate('mongo', db)
 }
 
+
 module.exports = fastifyPlugin(dbConnector)
