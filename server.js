@@ -7,7 +7,7 @@ const schema = {
   properties: {
     PORT: {
       type: "string",
-      default: 3000,
+      default: process.env.PORT || 3000,
     },
   },
 };
@@ -32,7 +32,7 @@ fastify.get("/", function (request, reply) {
 fastify.register(require("./routes/auth"));
 
 //Server Creation
-fastify.listen(3000, function (err, address) {
+fastify.listen(process.env.PORT || 3000, function (err, address) {
   if (err) {
     fastify.log.error(err);
     process.exit(1);
